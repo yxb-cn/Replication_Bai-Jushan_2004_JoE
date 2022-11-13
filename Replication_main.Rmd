@@ -1,0 +1,822 @@
+---
+title: "Replication of \"Estimating cross-section common stochastic trends in nonstationary panel data\""
+author:
+  - Xuanbin Yang
+date: \today
+documentclass: article
+geometry: margin=1in
+tables: yes
+bibliography: mybib.bib
+csl: apa.csl
+output: 
+  rticles::ctex:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    extra_dependencies: float,color,xcolor,graphicx,svg,mathtools,amsmath,caption,setspace,makecell
+header-includes:
+- \usepackage{fvextra}
+- \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+\onehalfspacing
+
+# Introduction
+
+&emsp;&emsp;This paper is the replication of "Estimating cross-section common stochastic trends in nonstationary panel data" [@bai2004estimating].
+
+# Models
+
+## Restricted dynamic factor model
+
+&emsp;&emsp;Consider the following models:
+\begin{align}
+X_{i t}=\sum_{j=1}^{r} \lambda_{i j} F_{j t}+e_{i t}=\lambda_{i}^{\prime} F_{t}+e_{i t},\quad(i=1,2, \ldots, N ; t=1,2, \ldots, T), 
+\end{align}
+
+
+where $e_{i t}$ is an I(0) error process, which can be serially corelated for each $i$, $\lambda_{i}=\left(\lambda_{i 1}, \ldots, \lambda_{i r}\right)^{\prime}$, $F_{t}=\left(F_{1 t}, \ldots, F_{r t}\right)^{\prime}$ is a vector of integrated process
+$$
+F_t = F_{t-1}+u_t,
+$$
+and $u_t$ is a vector ($r\times 1$) zero-mean I(0) process (not necessarily i.i.d.) that drive the stochastic trend $F_t$. For each given $i$, the process $X_{it}$ is I(1) unless $\lambda_i\neq0$.
+
+&emsp;&emsp;We use $F_t^0$, $\lambda_i^0$ and $r$ to denote the true common trends, the true factor loading coefficient, and the true number of trends, respectively. At a given $t$, we have
+\begin{align}
+X_{t}=\Lambda^{0} F_{t}^{0}+e_{t},
+\end{align}
+where $X_{t}=\left(X_{1 t}, X_{2 t}, \ldots, X_{N t}\right)^{\prime}$, $\Lambda^{0}=\left(\lambda_{1}^{0}, \lambda_{2}^{0}, \ldots, \lambda_{N}^{0}\right)^{\prime}$, $e_{t}=\left(e_{1 t}, e_{2 t}, \ldots, e_{N t}\right)^{\prime}$.
+
+&emsp;&emsp;Let $\underline{X}_{i}$ be a $T\times 1$ vector of time series observations for the $i$th cross-section unit. For a given $i$, we have
+\begin{align}
+\underline{X}_{i}=F^{0} \lambda_{i}^{0}+\underline{e}_{i},
+\end{align}
+where $\underline{X}_{i}=\left(X_{i 1}, X_{i 2}, \ldots, X_{i T}\right)^{\prime}$, $F^{0}=\left(F_{1}^{0}, F_{2}^{0}, \ldots, F_{T}^{0}\right)^{\prime}$, $\underline{e}_{i}=\left(e_{i 1}, e_{i 2}, \ldots, e_{i T}\right)^{\prime}$.
+
+## Generalized dynamic factor model
+
+&emsp;&emsp;Consider the following dynamic factor models:
+\begin{align}
+&X_{i t}=\lambda_{i}(L)^{\prime} F_{t}+e_{i t} \\
+&F_{t}=F_{t-1}+u_{t}
+\end{align}
+where $\lambda_i(L)$ is a vector of polynomials of the lag operator. The relation between $X_{i t}$ and $F_t$ is now dynamic.
+
+&emsp;&emsp;We assume
+$$
+\lambda_{i}(L)=\sum_{i=0}^{\infty} a_{i j} L^{j},
+$$
+where $\sum_{i=0}^{\infty} j\left|a_{i j}\right|<\infty$, and we assume $F_t=0$ for $t<0$.
+
+&emsp;&emsp;For deriving the limiting distribution, we restrict $\lambda_i(L)$ to be a finite order polynomial. Consider
+\begin{align}
+X_{i t}=\lambda_{i 0}^{\prime} F_{t}+\lambda_{i 1}^{\prime} F_{t-1}+\cdots+\lambda_{i p}^{\prime} F_{t-p}+e_{i t} ,
+\end{align}
+
+This can be rewritten as
+\begin{align}
+X_{i t}=\gamma_{i 0}^{\prime} F_{t}-\gamma_{i 1}^{\prime} \Delta F_{t-1}-\cdots-\gamma_{i p}^{\prime} \Delta F_{t-p}+e_{i t},
+\end{align}
+
+where $\gamma_{i k}=\lambda_{i k}+\lambda_{i k+1}+\cdots+\lambda_{i p}$. Denoting
+\begin{align}
+\gamma_{i}^{\prime}=\left(\gamma_{i 0}^{\prime},-\gamma_{i 1}^{\prime}, \ldots,-\gamma_{i p}^{\prime}\right)\quad\underline{F}_{t}=\left(F_{t}^{\prime}, \Delta F_{t-1}^{\prime}, \ldots, \Delta F_{t-p}^{\prime}\right)^{\prime},
+\end{align}
+
+Eq.(7) can be rewritten as
+\begin{align}
+X_{i t}=& \gamma_{i}^{\prime} \underline{F}_{t}+e_{i t} \\
+&=\gamma_{i 0}^{\prime} F_{t}+\gamma_{i 0-}^{\prime} G_{t}+e_{i t},
+\end{align}
+
+where $G_{t}=\left(\Delta F_{t-1}^{\prime}, \ldots, \Delta F_{t-p}^{\prime}\right)^{\prime}$, $\gamma_{i 0-}$ is a sub-vector of $\gamma_{i}$ other than $\gamma_{i 0}$. This reparametrization implies that $F_t$ is a vector of I(1) factors, $G_t$ is a vector of I(0) factors.
+
+# Estimation
+
+## Restricted dynamic factor model
+
+### Estimating common stochastic trends and factor loading
+
+&emsp;&emsp;Because the true dimension $r$ is unknown, we start with an arbitrary number $k(k<min\{N,T\})$. The superscript in $\lambda_i^k$ and $F_t^k$ highlights the allowance for $k$ stochastic trends in the estimation. Estimates of $\Lambda^k$ and $F^k$ are obtained by solving the optimization problem
+\begin{align}
+V(k)=\min _{\Lambda^{k}, F^{k}}&\ (N T)^{-1} \sum_{i=1}^{N} \sum_{t=1}^{T}\left(X_{i t}-\lambda_{i}^{k \prime} F_{t}^{k}\right)^{2}\\
+\text{s.t.}&\ F^{k\prime}F^k/T^2=I_k \ \text{or}\ \Lambda^{k\prime}\Lambda^k/N=I_k
+\end{align}
+
+&emsp;&emsp;If we use the normalization that $F^{k\prime}F^k/T^2=I_k$, the optimization problem is identical to maximizing $\operatorname{tr}\left(F^{k \prime}\left(X X^{\prime}\right) F^{k}\right)$, where $X=\left(\underline{X}_{1}, \ldots, \underline{X}_{N}\right)$ is $T\times N$. The estimated common-trend matrix, denoted by $\tilde{F}^k$, is $T$ times the eigenvectors corresponding to the $k$ largest eigenvalues of $T\times T$ matrix $XX^\prime$; Given $\tilde{F}^k$, we have $\tilde{\Lambda}^{k \prime}=\left(\tilde{F}^{k \prime} \tilde{F}^{k}\right)^{-1} \tilde{F}^{k \prime} X=\tilde{F}^{k \prime} X / T^{2}$.
+
+&emsp;&emsp;If we use the normalization that $\Lambda^{k\prime}\Lambda^k/N=I_k$, $\bar{\Lambda}^k$ is constructed as the $\sqrt{N}$ times the eigenvectors corresponding to the $k$ largest eigenvalues of $N\times N$ matrix $X^\prime X$ and $\bar{F}^{k}=X \bar{\Lambda}^{k} / N$.
+
+&emsp;&emsp;The second solution is easier to compute when $N<T$ and the first is easier when $T<N$.
+
+### Confidence intervals
+
+&emsp;&emsp;Actually, the principal components method is estimating a rotation of the true $F^0$. To evaluate whether a given economic series is one of (or a linear combination) the underlying factors, consider a rotation of $\tilde{F}_t$ toward $R_t$ via the regression  
+
+\begin{align}
+R_{t}=\alpha+\tilde{F}_{t}^{\prime} \delta+error.
+\end{align}
+
+&emsp;&emsp;Let $(\hat{\alpha},\hat{\delta})$ be the least-squares estimator, and define $\hat{R}_{t}=\hat{\alpha}+\tilde{F}_{t}^{\prime} \hat{\delta}$. When $N, T \rightarrow \infty$, $N / T^{3} \rightarrow 0$, we have 
+
+\begin{align}
+\frac{\sqrt{N}\left(\hat{R}_{t}-\alpha-\delta^{\prime} F_{t}^{0}\right)}{\left[\hat{\delta}^{\prime} V_{N T}^{-1}\left(\frac{1}{N} \sum_{i=1}^{N} \tilde{e}_{i t}^{2} \tilde{\lambda}_{i} \tilde{\lambda}_{i}^{\prime}\right) V_{N T}^{-1} \hat{\delta}\right]^{1 / 2}} \stackrel{\mathrm{d}}{\rightarrow} N(0,1),
+\end{align}
+
+where $\tilde{e}_{i t}=X_{i t}-\tilde{\lambda}_{i}^{\prime} \tilde{F}_{t}$, and $V_{NT}$ is a diagonal matrix consisting of the first $r$ largest eigenvalues of $X X^{\prime} /\left(T^{2} N\right)$. From this, the 95% confidence interval for $R_{t}=\alpha+\delta^{\prime} F_{t}^{0}(t=1,2,\ldots,T)$ is 
+\begin{align}
+\left(\hat{R}_{t}-1.96 S_{t} N^{-1 / 2}, \hat{R}_{t}+1.96 S_{t} N^{-1 / 2}\right),
+\end{align}
+where $S_t$ is the denominator expression given in Eq.(14).
+
+&emsp;&emsp;For the null hypothesis $R_{t}=\delta^{\prime} F_{t}^{0}$ for all $t$, the constant regressor in Eq.(13,14) can be suppressed, the method above is still valid.
+
+## Generalized dynamic factor models
+
+### Estimating common stochastic trends and factor loading
+
+&emsp;&emsp;Let $\tilde{F}$ be the $r$ eigenvectors of $XX^\prime$ corresponding to the first $r$ largest eigenvalues normalized such that $\tilde{F}^\prime\tilde{F}/T^2=I$ and let $\tilde{G}$ be the $q$ eigenvectors corresponding to the next $q$ largest eigenvalues, normalized such that $\tilde{G}^\prime\tilde{G}/T=I$. Denote
+
+$$
+\underline{\tilde{F}}=(\tilde{F}, \tilde{G}).
+$$
+&emsp;&emsp;Let $V_{NT}^r$ be the diagonal matrix of the first $r$ eigenvalues of the matrix $X X^{\prime} /\left(T^{2} N\right)$ and $V_{N T}^{q}$ be the diagonal matrix of the $(r+1)$th to $(r+q)$th largest eigenvalues of the matrix $X X^{\prime} /\left(T N\right)$. Denote $\underline{V}_{N T}=\operatorname{diag}\left(V_{N T}^{r}, V_{N T}^{q}\right)$. We use superscript 0 to represent the true quantities so that $\underline{F}^0=\left(\underline{F}_1^0, \underline{F}_2^0, \ldots, \underline{F}_T^0\right)^{\prime}$ is the $T\times(r+q)$ true factor matrix and $\Gamma^0=\left(\gamma_1^0, \gamma_2^0, \ldots, \gamma_N^0\right)^{\prime}$ is the $N\times (r+q)$ true factor loading matrix. We estimate $\underline{F}^{0}$ by $\underline{\tilde{F}}$ and estimate $\Gamma^0$ by
+$$
+\tilde{\Gamma}=X^{\prime} \underline{\tilde{F}} \Upsilon_{T}^{-2}
+$$
+where $\Upsilon_{T}=\operatorname{diag}\left(T I_{r}, \sqrt{T} I_{q}\right)$.
+
+### Confidence intervals
+
+&emsp;&emsp;Similarly, we can test the hypothesis that an observable sequence $R_t$ is one of (or a linear combination) the underlying factors. Consider rotating the estimated factors toward $R_t$ by running the regression:
+
+\begin{align}
+R_{t}=\alpha+\delta^{\prime} \underline{\tilde{F}}_{t}+error.
+\end{align}
+
+&emsp;&emsp;Let $(\hat{\alpha},\hat{\delta})$be the least-squares estimator and define $\hat{R}_{t}=\hat{\alpha}+\hat{\delta}^{\prime} \underline{F}_{t}$. When $N, T \rightarrow \infty$, $N / T^{2} \rightarrow 0$, we have
+
+\begin{align}
+\frac{\sqrt{N}\left(\hat{R}_{t}-\alpha-\delta^{\prime} \underline{F}_{t}^{0}\right)}{\left[\hat{\delta}^{\prime} \underline{V}_{N T}^{-1}\left(\frac{1}{N} \sum_{i=1}^{N} \tilde{e}_{i t}^{2} \tilde{\gamma}_{i} \tilde{\gamma}_{i}^{\prime}\right) \underline{V}_{N T}^{-1} \hat{\delta}\right]^{1 / 2}} \stackrel{\mathrm{d}}{\rightarrow} N(0,1).
+\end{align}
+
+&emsp;&emsp;From this, the 95% confidence interval for $R_{t}=\alpha+\delta^{\prime} F_{t}^{0}(t=1,2,\ldots,T)$ is
+\begin{align}
+\left(\hat{R}_{t}-1.96 S_{t} N^{-1 / 2}, \hat{R}_{t}+1.96 S_{t} N^{-1 / 2}\right),
+\end{align}
+where $S_t$ is the denominator expression of Eq.(17).
+
+
+&emsp;&emsp;If we test $R_{t}=\delta^{\prime} \underline{F}_{t}^0$, the constant in the regression should be suppressed and the corollary continues to hold.
+
+# The number of common stochastic trends
+
+## Using data in differences
+
+&emsp;&emsp;Model (1) under first differencing takes the form
+$$
+\Delta X_{i t}=\lambda_{i}^{\prime} u_{t}+\Delta e_{i t}.
+$$
+Let
+\begin{align}
+V(k)=\min _{\Lambda^{k}, U^{k}}(N T)^{-1} \sum_{i=1}^{N} \sum_{t=1}^{T}\left(\Delta X_{i t}-\lambda_{i}^{k} u_{t}^{k}\right)^{2},
+\end{align}
+where $U^{k}=\left(u_{1}^{k}, u_{2}^{k}, \ldots, u_{T}^{k}\right)^{\prime}$. Consider the criterion of the form:
+$$
+P C(k)=V(k)+k g(N, T),
+$$
+where $g(N, T)$ is a penalty function. Let $k m a x$ be a positive integer such that $r<kmax$ and let
+\begin{align}
+\hat{k}=\underset{0 \leqslant k \leqslant kmax }{\arg \min } P C(k).
+\end{align}
+
+&emsp;&emsp;Denote $C_{N T}=\min [\sqrt{N}, \sqrt{T}]$, let $\hat{\sigma}^2$ be a consistent estimate of $(N T)^{-1} \sum_{i=1}^{N} \sum_{t=1}^{T} E\left(\Delta e_{i t}\right)^{2}$, say $\hat{\sigma}^{2}=V(k m a x)$. The criteria in (24-26) with $\alpha_T=1$ can consistently estimate the number of common stochastic trends.
+
+## New criteria for data in levels
+
+&emsp;&emsp;As for data in levels, let
+\begin{align}
+V(k)=V\left(k, \hat{F}^{k}\right)=\min _{\Lambda^{k}} \frac{1}{N T} \sum_{i=1}^{N} \sum_{t=1}^{T}\left(X_{i t}-\lambda_{i}^{k \prime} \hat{F}_{t}^{k}\right)^{2}
+\end{align}
+denote the sum of squared residuals (divided by $NT$) when $k$ trends are estimated. Consider the criteria
+\begin{align}
+I P C(k)=V(k)+k g(N, T),
+\end{align}
+to consitently estimate $r$, where the label "$IPC$" refers to "Integrated Panel Criterion”. Again, assume $r<kmax$ and let
+\begin{align}
+\hat{k}=\underset{0 \leqslant k \leqslant kmax }{\arg \min } I P C(k).
+\end{align}
+
+&emsp;&emsp;Let $\alpha_{T}=T /[4 \log \log (T)]$, consider the following criteria:
+\begin{align}
+&I P C_{1}(k)=V(k)+k \hat{\sigma}^{2} \alpha_{T}\left(\frac{N+T}{N T}\right) \log \left(\frac{N T}{N+T}\right); \\
+&I P C_{2}(k)=V(k)+k \hat{\sigma}^{2} \alpha_{T}\left(\frac{N+T}{N T}\right) \log C_{N T}^{2}; \\
+&I P C_{3}(k)=V(k)+k \hat{\sigma}^{2} \alpha_{T}\left(\frac{N+T-k}{N T}\right) \log (N T).
+\end{align}
+
+These criteria can consitently estimate the number of common stochastic trends.
+
+&emsp;&emsp;Because there are r of I(1) factors, the $r$ I(1) factors can be consistently estimated by the data in levels, and the differenced data approach leads to consistent estimation of the total number of factors $(r + q)$. Thus, $q$ can also be consistently estimated.
+
+# Simulation results
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+source("myfunction.R")
+library(ggplot2)
+library(cowplot)
+library(MASS)
+library(RSpectra)
+library(knitr)
+library(kableExtra)
+library(purrr)
+library(tseries)
+library(tidyverse)
+library(plotly)
+```
+
+## The dimension of common trends
+
+### Restricted dynamic factor model
+
+&emsp;&emsp;We first consider standard (restricted) dynamic factor models (no lags of $F_t$ entering into $X_{it}$). Data are generated according to 
+\begin{align}
+&X_{i t}=\sum_{j=1}^{r} \lambda_{i j} F_{j t}+e_{i t} \\
+&F_{j t}=F_{j t-1}+u_{j t} \\
+&e_{i t}=\rho e_{i t-1}+v_{i t}+\theta v_{i t-1}
+\end{align}
+where $\lambda_{ij}$, $u_{ij}$ and $v_{it}$ are i.i.d. $N(0,1)$ for all $(i,j,t)$, and are independent of each other. The parameter values are $r=2$, $\rho=0.5$, $\theta=0.5$. Thirteen combinations of $N$ and $T$ of various sizes are considered. In all cases, $kmax=8$. Both the differenced data and level data methods are used and evaluated. Table 1 reports the average $\hat{k}$ over 1000 simulations. The differenced and level methods are both estimating $r = 2$. All criteria perform reasonably well, except the first two criteria for the differenced data with $T = 40$ and with $T = N = 50$.
+
+```{r echo=FALSE}
+NT_cases = matrix(c(100,40,100,60,200,60,500,60,1000,60,
+                    40,100,60,100,60,200,60,500,60,1000,
+                    50,50,100,100,200,200),nrow = 13,byrow = TRUE)
+estimated_num1 = matrix(0,13,6)
+r1 = 2
+rou1 = 0.5
+theta1 = 0.5
+kmax = 8
+repnum = 1000
+for(i in 1:repnum){
+  for(j in 1:13){
+    X_list = generate_standard_DFM_data(NT_cases[j,1],NT_cases[j,2],r1,rou1,theta1)
+    X = X_list$X
+    X_diff = X_list$X_diff
+    estimated_num1[j,1:3] = estimated_num1[j,1:3] + estimate_factornum_byPC_IPC(X_diff,kmax,3,1)
+    estimated_num1[j,4:6] = estimated_num1[j,4:6] + estimate_factornum_byPC_IPC(X,kmax,3,2)
+  }
+}
+estimated_num1 = estimated_num1/repnum
+result1 = cbind(NT_cases,estimated_num1)
+colnames(result1) <- c("N","T","PC1","PC2","PC3",
+                       "IPC1","IPC2","IPC3")
+```
+
+```{r echo=FALSE}
+kable(result1,booktabs = T,caption = "Estimated number of factors averaged over 1000 repetitions (Restricted dynamic factor model)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed","responsive"),full_width = T)%>%
+  add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
+  footnote(general = "The true number of I(1) factors is 2.")
+```
+
+### Generalized dynamic factor models
+
+&emsp;&emsp;We next consider generalized dynamic factor models, Eq.(24) is replaced by
+\begin{align}
+X_{i t}=\sum_{j=1}^{r} \sum_{k=0}^{p} \lambda_{i j k} F_{j t-k}+e_{i t},
+\end{align}
+where the $\lambda_{i j k}$ are i.i.d. $N(0,1)$. The parameter are $r=2$ and $p=1$ while the other parameters are consistent with the previous model. Given $r=2$, Eq.(30) can be rewritten as 
+\begin{align}
+X_{i t}=\lambda_{i 10} F_{1 t}+\lambda_{i 11} F_{1 t-1}+\lambda_{i 20} F_{2 t}+\lambda_{i 21} F_{2 t-1}+e_{i t}.
+\end{align}
+
+&emsp;&emsp;With data in levels, $r=2$ factors should be identified; with data in differences, $r(p+1)=4$ factors should be identified. The results are reported in Table 2, with each entry representing the average of $\hat{k}$ over 1000 repetitions. The simulation results are consistent with the theory that the number of factors in a generalized dynamic factor model can be identified.
+
+\newpage
+```{r echo=FALSE}
+NT_cases = matrix(c(100,40,100,60,200,60,500,60,1000,60,
+                    40,100,60,100,60,200,60,500,60,1000,
+                    50,50,100,100,200,200),nrow = 13,byrow = TRUE)
+estimated_num2 = matrix(0,13,6)
+r2 = 2
+p = 1
+rou2 = 0.5
+theta2 = 0.5
+for(i in 1:repnum){
+  for(j in 1:13){
+    X_list = generate_generalized_DFM_data(NT_cases[j,1],NT_cases[j,2],r2,p,rou2,theta2)
+    X = X_list$X
+    X_diff = X_list$X_diff
+    estimated_num2[j,1:3] = estimated_num2[j,1:3] + estimate_factornum_byPC_IPC(X_diff,kmax,3,1)
+    estimated_num2[j,4:6] = estimated_num2[j,4:6] + estimate_factornum_byPC_IPC(X,kmax,3,2)
+  }
+}
+estimated_num2 = estimated_num2/repnum
+result2 = cbind(NT_cases,estimated_num2)
+colnames(result2) <- c("N","T","PC1","PC2","PC3","IPC1","IPC2","IPC3")
+```
+
+```{r echo=FALSE}
+kable(result2,booktabs = T,longtable = T,caption ="Estimated number of factors 
+      averaged over 1000 repititions (Generalized dynamic factor model)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width = T)%>%
+  add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
+  footnote(general = "The level-data method gives an estimate of r (true value r = 2), and the differenced-data method gives an estimate of r(p + 1) (true value is 4).", threeparttable = TRUE)
+```
+
+## Estimating common trends
+
+
+### Restricted dynamic factor model
+
+&emsp;&emsp;Data are generated according to Eqs. (27)–(29) with $r =2,\rho=0.5,\theta=0.5$. The true factors are denoted by $F^0 (T × 2)$. We fix $T$ at $T = 30$. We examine the behavior of the factor estimates as $N$ varies from $N =25$ to $50$ and then to $100$. For each $(T,N)$, we simulate a sample of observations, denoted by $X$, a $T \times N$ matrix. We use the estimator $\tilde{F}(T\times N)$, which is equal to the eigenvectors of the first two largest eigenvalues of $XX^\prime$ multiplied by $T$. To see that $\tilde{F}$ is estimating a transformation of $F^0$, we rotate $\tilde{F}$ toward each of the true factor process via the following regression
+\begin{align}
+F_{k t}^{0}=\delta_{k}^{\prime} \tilde{F}_{t}+error
+\end{align}
+
+for $k = 1,2$. Let $\hat\delta_{k}$ be the least-squares estimate of $\delta_{k}$. Then $\hat{\delta}_{k}^{\prime} \tilde{F}_{t}$ is the predicted value of $F_{kt}^0$ using the predictor $\tilde{F}_t$. The precision of the factor estimates increases as $N$ becomes larger (for example, see the sample correlation coefficient reported in Fig.1). A plot of $\hat{\delta}_{k}^{\prime} \tilde{F}_{t}$ along with $F_{kt}^0$ would show that they track each other extremely well, but instead, we have plotted the confidence intervals. These 95% confidence intervals together with the true factor process are plotted in Fig.1. The left panels are for the first factor and the right panels for the second factor. The true factor processes are indeed located inside the confidence intervals with the exception of a small number of data points.
+
+```{r echo=FALSE}
+N_cases = c(25,50,100)
+r1 = 2
+rou1 = 0.5
+theta1 = 0.5
+T = 30
+CI_array1 = array(0,c(T,r1,2,3))
+F0_array1 = array(0,c(T,r1,3))
+cor_F1 = matrix(0,3,r1)
+for(n in 1:3){
+  X_list = generate_standard_DFM_data(N_cases[n],T,r1,rou1,theta1,33)
+  X = X_list$X
+  F0_array1[,,n] = X_list$F0
+  CI_list = F_confidence_interval_SDFM(X, F0_array1[,,n], r1)
+  CI_array1[,,,n] = CI_list$CI
+  cor_F1[n,] =  CI_list$cor_F
+}
+```
+
+```{r echo=FALSE, fig.cap="Confidence intervals for the true factor process. Data are generated according to the model specified in Table 1. The left three panels are the confidence intervals (dashed line) for the first true factor along with the true factor process, and the intervals are estimated from N=25"}
+CI1_df = data.frame(F0_1_N25 = F0_array1[,1,1],
+                    F0_2_N25 = F0_array1[,2,1],
+                    F0_1_N50 = F0_array1[,1,2],
+                    F0_2_N50 = F0_array1[,2,2],
+                    F0_1_N100 = F0_array1[,1,3],
+                    F0_2_N100 = F0_array1[,2,3],
+                    CI_N25_k1_low = CI_array1[,1,1,1],
+                    CI_N25_k1_high = CI_array1[,1,2,1],
+                    CI_N50_k1_low = CI_array1[,1,1,2],
+                    CI_N50_k1_high = CI_array1[,1,2,2],
+                    CI_N100_k1_low = CI_array1[,1,1,3],
+                    CI_N100_k1_high = CI_array1[,1,2,3],
+                    CI_N25_k2_low = CI_array1[,2,1,1],
+                    CI_N25_k2_high = CI_array1[,2,2,1],
+                    CI_N50_k2_low = CI_array1[,2,1,2],
+                    CI_N50_k2_high = CI_array1[,2,2,2],
+                    CI_N100_k2_low = CI_array1[,2,1,3],
+                    CI_N100_k2_high = CI_array1[,2,2,3])
+
+CI1plot_F0_1_N25 = ggplot(CI1_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_1_N25, colour = "F0_1_N25"),size=0.6)+ 
+        geom_line(aes(y=CI_N25_k1_low, colour = "CI_N25_k1_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N25_k1_high, colour = "CI_N25_k1_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=25")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F1[1,1]))
+CI1plot_F0_2_N25 = ggplot(CI1_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_2_N25, colour = "F0_2_N25"),size=0.6)+ 
+        geom_line(aes(y=CI_N25_k2_low, colour = "CI_N25_k2_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N25_k2_high, colour = "CI_N25_k2_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=25")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F1[1,2]))
+CI1plot_F0_1_N50 = ggplot(CI1_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_1_N50, colour = "F0_1_N50"),size=0.6)+
+        geom_line(aes(y=CI_N50_k1_low, colour = "CI_N50_k1_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N50_k1_high, colour = "CI_N50_k1_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=50")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F1[2,1]))
+CI1plot_F0_2_N50 = ggplot(CI1_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_2_N50, colour = "F0_2_N50"),size=0.6)+
+        geom_line(aes(y=CI_N50_k2_low, colour = "CI_N50_k2_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N50_k2_high, colour = "CI_N50_k2_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=50")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F1[2,2]))
+CI1plot_F0_1_N100 = ggplot(CI1_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_1_N100, colour = "F0_1_N100"),size=0.6)+
+        geom_line(aes(y=CI_N100_k1_low, colour = "CI_N100_k1_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N100_k1_high, colour = "CI_N100_k1_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=100")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F1[3,1]))
+CI1plot_F0_2_N100 = ggplot(CI1_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_2_N100, colour = "F0_2_N100"),size=0.6)+
+        geom_line(aes(y=CI_N100_k2_low, colour = "CI_N100_k2_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N100_k2_high, colour = "CI_N100_k2_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=100")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F1[3,2]))
+
+CI1plot_all = plot_grid(CI1plot_F0_1_N25,CI1plot_F0_2_N25,CI1plot_F0_1_N50,
+                        CI1plot_F0_2_N50,CI1plot_F0_1_N100,CI1plot_F0_2_N100,align = "vh", ncol = 2)
+CI1plot_all
+
+```
+
+### Generalized dynamic factor models
+
+&emsp;&emsp;The data are generated according to Eqs. (30, 28, 29) with $r=2, p=1, \rho=0.5$ and $\theta = 0.5$, Again $T$ is fixed at $30$ and $N$ takes on the values $25, 50,$ and $100$. In this case, 4 factors need to be estimated, with 2 being I(1) and 2 being I(0). Let $\underline{\tilde{F}}$ be the $T × 4$ factor estimate described in Section 3.2.1. For $k =1, 2$, we consider the rotation
+
+$$
+F_{k t}^{0}=\delta_{k}^{\prime} \underline{\tilde{F}}_{t}+{ error }.
+$$
+
+These 95% intervals along with the true factor process $\{F^0_{kt}\}$ and sample correlation coefficient are plotted in Fig.2. Again, $\hat{\delta}_{k}^{\prime} \underline{\tilde{F}}_{t}$ tracks $F_{kt}^0$ extremely well.
+
+
+```{r echo=FALSE}
+N_cases = c(25,50,100)
+r2 = 2
+q = 2
+p = 1
+rou2 = 0.5
+theta2 = 0.5
+T = 30
+CI_array2 = array(0,c(T,r2,2,3))
+F0_array2 = array(0,c(T,r2,3))
+cor_F2 = matrix(0,3,r2)
+for(n in 1:3){
+  X_list = generate_generalized_DFM_data(N_cases[n],T,r2,p,rou2,theta2,33)
+  X = X_list$X
+  F0_array2[,,n] = X_list$F0
+  CI_list = F_confidence_interval_GDFM(X, F0_array2[,,n], r2, q)
+  CI_array2[,,,n] = CI_list$CI
+  cor_F2[n,] =  CI_list$cor_F
+}
+```
+```{r echo=FALSE, fig.cap="Confidence intervals for the true factor process. Data are generated according to the model specified in Table 2 (generalized dynamic factor models). The left three panels are the confidence intervals (dashed lines) for the first factor and the intervals are estimated from N = 25"}
+CI2_df = data.frame(F0_1_N25 = F0_array2[,1,1],
+                    F0_2_N25 = F0_array2[,2,1],
+                    F0_1_N50 = F0_array2[,1,2],
+                    F0_2_N50 = F0_array2[,2,2],
+                    F0_1_N100 = F0_array2[,1,3],
+                    F0_2_N100 = F0_array2[,2,3],
+                    CI_N25_k1_low = CI_array2[,1,1,1],
+                    CI_N25_k1_high = CI_array2[,1,2,1],
+                    CI_N50_k1_low = CI_array2[,1,1,2],
+                    CI_N50_k1_high = CI_array2[,1,2,2],
+                    CI_N100_k1_low = CI_array2[,1,1,3],
+                    CI_N100_k1_high = CI_array2[,1,2,3],
+                    CI_N25_k2_low = CI_array2[,2,1,1],
+                    CI_N25_k2_high = CI_array2[,2,2,1],
+                    CI_N50_k2_low = CI_array2[,2,1,2],
+                    CI_N50_k2_high = CI_array2[,2,2,2],
+                    CI_N100_k2_low = CI_array2[,2,1,3],
+                    CI_N100_k2_high = CI_array2[,2,2,3])
+
+CI2plot_F0_1_N25 = ggplot(CI2_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_1_N25, colour = "F0_1_N25"),size=0.6)+ 
+        geom_line(aes(y=CI_N25_k1_low, colour = "CI_N25_k1_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N25_k1_high, colour = "CI_N25_k1_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=25")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F2[1,1]))
+CI2plot_F0_2_N25 = ggplot(CI2_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_2_N25, colour = "F0_2_N25"),size=0.6)+ 
+        geom_line(aes(y=CI_N25_k2_low, colour = "CI_N25_k2_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N25_k2_high, colour = "CI_N25_k2_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=25")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F2[1,2]))
+CI2plot_F0_1_N50 = ggplot(CI2_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_1_N50, colour = "F0_1_N50"),size=0.6)+
+        geom_line(aes(y=CI_N50_k1_low, colour = "CI_N50_k1_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N50_k1_high, colour = "CI_N50_k1_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=50")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F2[2,1]))
+CI2plot_F0_2_N50 = ggplot(CI2_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_2_N50, colour = "F0_2_N50"),size=0.6)+
+        geom_line(aes(y=CI_N50_k2_low, colour = "CI_N50_k2_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N50_k2_high, colour = "CI_N50_k2_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=50")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F2[2,2]))
+CI2plot_F0_1_N100 = ggplot(CI2_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_1_N100, colour = "F0_1_N100"),size=0.6)+
+        geom_line(aes(y=CI_N100_k1_low, colour = "CI_N100_k1_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N100_k1_high, colour = "CI_N100_k1_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=100")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F2[3,1]))
+CI2plot_F0_2_N100 = ggplot(CI2_df, aes(x = 1:T))+
+        geom_line(aes(y=F0_2_N100, colour = "F0_2_N100"),size=0.6)+
+        geom_line(aes(y=CI_N100_k2_low, colour = "CI_N100_k2_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_N100_k2_high, colour = "CI_N100_k2_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab("T=30,N=100")+
+        ylab(NULL)+
+        labs(title = sprintf("sample correlation = %.4f",cor_F2[3,2]))
+
+CI2plot_all = plot_grid(CI2plot_F0_1_N25,CI2plot_F0_2_N25,CI2plot_F0_1_N50,
+                        CI2plot_F0_2_N50,CI2plot_F0_1_N100,CI2plot_F0_2_N100,align = "vh", ncol = 2)
+CI2plot_all
+
+```
+
+**(The simulation results are nearly the same with the original ones.)**
+
+# Application: sectoral employment
+
+&emsp;&emsp;In this section we study fluctuations in employment across 60 industries for the U.S. We examine the hypothesis that these fluctuations can be explained by a small number of aggregate factors.
+
+&emsp;&emsp;The Bureau of Economic Analysis (BEA) reports the number of full-time equivalent (FTE) workers across various industries (NIPA, Tables 6.5b and 6.5c). There are a total of sixty private sector industries. A list of them is provided in Appendix. The data are annual frequency, ranging from 1948 to 2000. 
+
+&emsp;&emsp;The two sectors, "Social services" and "Membership organizations" under category "Social services and membership organizations" miss data during 1948-1974, after analysing the data trends, I interpolate the missing data such that "Social services" equals floor(1/3* "Social services and membership organizations") and "Membership organizations" equals ceiling(2/3* "organizations Social services and membership organizations").
+
+```{R include=FALSE}
+FTE_data = read_csv("FTE_data/FTE1948-2000.csv")
+Total_employment_GNP = read_csv("FTE_data/Total_employment+GNP.csv")
+Total_employment_GNP = log(Total_employment_GNP[,2:3])
+Year = FTE_data$Year
+FTE_data=log(FTE_data[,2:61])
+FTE_data_order1948 = FTE_data[,order(FTE_data[1,])]
+FTE_data_order2000 = FTE_data[,order(FTE_data[53,])]
+```
+
+```{R eval=FALSE, include=FALSE}
+axx <- list(
+        title = "Sector"
+)
+
+axy <- list(
+        title = "Year"
+)
+
+axz <- list(
+        title = "10*log(employment)"
+)
+Sector = 60:1
+plot3 = plot_ly(z = ~as.matrix(FTE_data_order1948),x = ~Sector,y=~Year,colorscale = 'Rainbow')%>%
+        add_surface(showscale = FALSE)%>%
+        layout(scene = list(xaxis=axx,yaxis=axy,zaxis=axz))
+# plot3
+
+plot4 = plot_ly(z = ~as.matrix(FTE_data_order2000),x = ~Sector,y=~Year,colorscale = 'Rainbow')%>%
+        add_surface(showscale = FALSE)%>%
+        layout(scene = list(xaxis=axx,yaxis=axy,zaxis=axz))
+# plot4
+```
+
+\begin{figure}[H]
+    \centering
+		\includegraphics{plot3.png}
+		\caption{The number of full-time equivalent employees across 60 sectors. The sectors are arranged in ascending
+order according to their 1948 values.}
+\end{figure}
+	
+\begin{figure}[H]
+    \centering
+		\includegraphics{plot4.png}
+		\caption{The number of full-time equivalent employees across 60 sectors. The sectors are arranged in ascending
+order according to their 2000 values.}
+\end{figure}
+
+&emsp;&emsp;Our analysis is based on the log-valued data. For graphical display, the series are ordered cross-sectionally to have a better view of the data. Two plots are given according to different methods of ordering. In Fig.3, we order the cross-sections according to their 1948 values in ascending order. In Fig.4, the cross-sections are ordered according to their 2000 values also in ascending order. The vertical axis represents the log-valued employment in each sector. The statistical analysis below does not depend on the ordering of cross-sections, and any permutation will give the same results.
+	
+&emsp;&emsp;**The number of factors.** For data in levels, we estimate the number of factors using the three criteria in Eq. (24-26). With $kmax = 6$, the first two criteria suggest four factors and the last criterion gives three factors. If we set $kmax = 4$, the first two criteria yield three factors and the last criterion gives two factors. If we choose $kmax$ to 2, all criteria give two factors. These results provide evidence in support of two nonstationary common factors. 
+
+For data in differences, we start with $kmax = 6$, and then set $kmax$ at the estimated value in the first around as in the previous paragraph. With $kmax = 6$, the first two criteria suggest six factors and the last criterion gives four factors. If we set $kmax = 4$, all criteria give four factors. If we choose $kmax$ to 2, all criteria give two factors. We follow the decision in the original paper that there is one I(0) factor in the system. The estimated residuals resulting from a three-factor model is plotted in Fig.5. No discernable pattern is found in the residuals, indicating a reasonable fit.
+
+**(The results are a little different from the original paper. Since the simulation is consistant with the original paper, then the difference can be attributed to the data consistency. Our data have missing values and we don't know how the author deal with this issue, even more, we don't know how much the rest of our data differs from the author's, though the Fig 3 and Fig 4 is similar to the original ones.)**
+
+```{R eval=FALSE, include=FALSE}
+kmax = 6
+estimate_factornum_byPC_IPC(as.matrix(FTE_data),kmax,normalization = 3,datatype = 2)
+
+kmax = 4
+estimate_factornum_byPC_IPC(as.matrix(FTE_data),kmax,normalization = 3,datatype = 2)
+
+kmax = 2
+estimate_factornum_byPC_IPC(as.matrix(FTE_data),kmax,normalization = 3,datatype = 2)
+
+kmax = 6
+estimate_factornum_byPC_IPC(diff(as.matrix(FTE_data)),kmax,normalization = 3,datatype = 1)
+
+kmax = 4
+estimate_factornum_byPC_IPC(diff(as.matrix(FTE_data)),kmax,normalization = 3,datatype = 1)
+
+kmax = 2
+estimate_factornum_byPC_IPC(diff(as.matrix(FTE_data)),kmax,normalization = 3,datatype = 1)
+
+```
+
+\begin{figure}[H]
+    \centering
+		\includegraphics[height=12cm]{plot5.png}
+		\caption{The number of full-time equivalent employees across 60 sectors. Estimated residuals from a three-factor model.}
+\end{figure}
+
+
+&emsp;&emsp;**Macroeconomic factors.** We test whether or not total employment and total output are the underlying factors. 
+
+&emsp;&emsp;To test whether total employment (log of value) is a true underlying factor, we rotate the three statistical factors toward $E_t$ by running the regression $E_t=\delta^{\prime}\underline{\tilde{F}}_t+error$. We then compute and plot the confidence intervals for the true underlying factor. Also
+plotted is the observable total employment. It is seen that total employment lies inside the confidence intervals throughout the most periods in 1948–2000, see Fig.6 (a little different from Bai's due to the using of different data). This suggests that we can accept the hypothesis that total employment is one of the underlying factors.
+
+&emsp;&emsp;To test whether GNP (log of value) is one of the true factors, we rotate the three statistical factors toward $Y_t$ by running the regression $Y_t=\delta^{\prime}\underline{\tilde{F}}_t+error$. Since there are many periods for which GNP stays outside the confidence intervals, the evidence in supporting GNP as a factor is dubious, see Fig.7. It remains an open question as to which economic variable constitutes the second nonstationary factor.
+
+
+```{R eval=FALSE, include=FALSE}
+axz_scale <- list(
+        title = "10*log(employment)",range = c(-4, 4)
+)
+result1 = estimate_F(as.matrix(FTE_data), 3, normalization = 1)
+estimated_residuals = as.matrix(FTE_data)-result1$X_hat
+plot5 = plot_ly(z = ~estimated_residuals,x = ~Sector,y=~Year,colorscale = 'Rainbow')%>%
+        add_surface(showscale = FALSE)%>%
+        layout(scene = list(xaxis=axx,yaxis=axy,zaxis=axz_scale))
+```
+
+
+
+```{R echo=FALSE, fig.cap = "Confidence intervals for testing total employment as a factor. Confidence intervals—dashed line, log-valued total employment—solid line.", out.width="80%", fig.align = 'center'}
+CI_E_list = F_confidence_interval_GDFM(as.matrix(FTE_data),as.matrix(Total_employment_GNP[,1]), 2, 1)
+CI_E = squeeze(CI_E_list$CI)
+CI_E_df = data.frame(Year,as.matrix(Total_employment_GNP[,1]),CI_E)
+colnames(CI_E_df) = c("Year","TE","CI_low","CI_high")
+
+CI_E_plot = ggplot(CI_E_df, aes(x = Year))+
+        geom_line(aes(y=TE, colour = "TE"),size=0.6)+ 
+        geom_line(aes(y=CI_low, colour = "CI_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_high, colour = "CI_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab(NULL)+
+        ylab(NULL)
+CI_E_plot
+```
+
+
+```{R echo=FALSE, fig.cap="Confidence intervals for testing GNP as a factor. Confidence intervals—dashed line, log-valued GNP—solid line.", out.width="80%", fig.align = 'center'}
+CI_GNP_list = F_confidence_interval_GDFM(as.matrix(FTE_data),as.matrix(Total_employment_GNP[,2]), 2, 1)
+CI_GNP = squeeze(CI_GNP_list$CI)
+CI_GNP_df = data.frame(Year,as.matrix(Total_employment_GNP[,2]),CI_GNP)
+colnames(CI_GNP_df) = c("Year","GNP","CI_low","CI_high")
+
+CI_GNP_plot = ggplot(CI_GNP_df, aes(x = Year))+
+        geom_line(aes(y=GNP, colour = "GNP"),size=0.6)+ 
+        geom_line(aes(y=CI_low, colour = "CI_low"),size=0.6,linetype="longdash")+
+        geom_line(aes(y=CI_high, colour = "CI_high"),size=0.6,linetype="longdash")+
+        scale_colour_manual(values = c("#156077","#156077","blue"))+
+        theme_bw()+
+        theme(legend.position="none",plot.title = element_text(hjust = 0.5))+
+        xlab(NULL)+
+        ylab(NULL)
+CI_GNP_plot
+```
+
+&emsp;&emsp;**(It can be seen that the ranges of y axes in Fig.6 and Fig.7 are a little different from the original ones in @bai2004estimating, so our data is not totally the same with the author's. The Bureau of Economic Analysis (BEA) have changed their statistical method and report different data of total employment and GNP on their website, thus, some difference of the results may occur).**
+
+
+\newpage
+# My Comments
+
+&emsp;&emsp;This paper proposes three criteria for consistently estimating cross-section common stochastic trends in nonstationary panel data which are widely used and extended in both econometric theoretical and empirical study. 
+
+&emsp;&emsp;However, these criteria' accuracy depend on the choice of $kmax$ to some extent. If the $kmax$ is chosen to be too large, for example, $kmax=20$ of $kmax=30$ in section 5.1.2, then we will see the wrong results as follows.
+\newpage
+
+```{r echo=FALSE}
+estimated_num2_kmax20 = matrix(0,13,6)
+r2 = 2
+p = 1
+rou2 = 0.5
+theta2 = 0.5
+kmax_large1 = 20
+for(i in 1:repnum){
+  for(j in 1:13){
+    X_list = generate_generalized_DFM_data(NT_cases[j,1],NT_cases[j,2],r2,p,rou2,theta2)
+    X = X_list$X
+    X_diff = X_list$X_diff
+    estimated_num2_kmax20[j,1:3] = estimated_num2_kmax20[j,1:3] + estimate_factornum_byPC_IPC(X_diff,kmax_large1,3,1)
+    estimated_num2_kmax20[j,4:6] = estimated_num2_kmax20[j,4:6] + estimate_factornum_byPC_IPC(X,kmax_large1,3,2)
+  }
+}
+estimated_num2_kmax20 = estimated_num2_kmax20/repnum
+result2_kmax20 = cbind(NT_cases,estimated_num2_kmax20)
+colnames(result2_kmax20) <- c("N","T","PC1","PC2","PC3","IPC1","IPC2","IPC3")
+kable(result2_kmax20,booktabs = T,longtable = T,caption ="Estimated number of factors averaged over 1000 repititions (Generalized dynamic factor model) when kmax=20") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive","HOLD_position"),full_width = T)%>%
+  add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
+  footnote(general = "The level-data method gives an estimate of r (true value r = 2), and the differenced-data method gives an estimate of r(p + 1) (true value is 4).", threeparttable = TRUE)
+```
+
+```{r echo=FALSE}
+estimated_num2_kmax30 = matrix(0,13,6)
+r2 = 2
+p = 1
+rou2 = 0.5
+theta2 = 0.5
+kmax_large2 = 30
+for(i in 1:repnum){
+  for(j in 1:13){
+    X_list = generate_generalized_DFM_data(NT_cases[j,1],NT_cases[j,2],r2,p,rou2,theta2)
+    X = X_list$X
+    X_diff = X_list$X_diff
+    estimated_num2_kmax30[j,1:3] = estimated_num2_kmax30[j,1:3] + estimate_factornum_byPC_IPC(X_diff,kmax_large2,3,1)
+    estimated_num2_kmax30[j,4:6] = estimated_num2_kmax30[j,4:6] + estimate_factornum_byPC_IPC(X,kmax_large2,3,2)
+  }
+}
+estimated_num2_kmax30 = estimated_num2_kmax30/repnum
+result2_kmax30 = cbind(NT_cases,estimated_num2_kmax30)
+colnames(result2_kmax30) <- c("N","T","PC1","PC2","PC3","IPC1","IPC2","IPC3")
+kable(result2_kmax30,booktabs = T,longtable = T,caption ="Estimated number of factors
+      averaged over 1000 repititions (Generalized dynamic factor model) when kmax=30") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive","HOLD_position"),full_width = T)%>%
+  add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
+  footnote(general = "The level-data method gives an estimate of r (true value r = 2), and the differenced-data method gives an estimate of r(p + 1) (true value is 4).", threeparttable = TRUE)
+```
+
+&emsp;&emsp;According to my analysis to the simulation results, in practical application, some error may occur in the following three conditions:
+
+  1. $T$ and $N$ is too small. According to Table 3 and Table 4, small $T$ and $N$ tend to estimate the number of factors incorrectly.
+  2. The high dimensional dataset contains I(d)(d$\geq2$) series. Since this paper only consider I(0) and I(1) process, if $X$ contains I(d)(d$\geq2$) series, the criteria tend to over estimate the number of factors. For example, I test the dataset in @mccracken2016fred without transforming to ensure stationarity, the estimated number equals to $kmax$ by these criteria in this paper, no matter what $kmax$ is set (in this example, $T=730$ and $N=136$, obviously this error is not caused by data size).
+  3. Some special high dimensional data. $kmax=20$ or $kmax=30$ seems to be too large in this simulation even if we don't know the true number of factors, however, we cannot determine how large the $kmax$ is can be regarded as "too large". It is entirely possible that some datasets are extremely sensitive to $kmax$, a usually considered small $kmax$ may still be "too large" for such datasets. 
+
+\section*{Bibliography}
+
+<div id="refs"></div>
+
+# Appendix {.unnumbered}
+
+\begin{table}[H]
+\begin{tabular}{llll}
+\hline
+Index & Sector                                       & Index & Sector                                 \\ \hline
+1     & Farms                                        & 31    & Trucking and warehousing1              \\
+2     & Agricultural services, forestry, and fishing & 32    & Water transportation                   \\
+3     & Metal mining                                 & 33    & Transportation by air1                 \\
+4     & Coal mining                                  & 34    & Pipelines, except natural gas          \\
+5     & Oil and gas extraction                       & 35    & Transportation services                \\
+6     & Nonmetallic minerals, except fuels           & 36    & Telephone and telegraph                \\
+7     & Construction                                 & 37    & Radio and television                   \\
+8     & Lumber and wood products                     & 38    & Electric, gas, and sanitary services   \\
+9     & Furniture and fixtures                       & 39    & Wholesale trade                        \\
+10    & Stone, clay, and glass products              & 40    & Retail trade                           \\
+11    & Primary metal industries                     & 41    & Banking                                \\
+12    & Fabricated metal products                    & 42    & Credit agencies other than banks       \\
+13    & Machinery, except electrical                 & 43    & Security and commodity brokers         \\
+14    & Electric and electronic equipment            & 44    & Insurance carriers                     \\
+15    & Motor vehicles and equipment                 & 45    & Insurance agents, brokers, and service \\
+16    & Other transportation equipment               & 46    & Real estate                            \\
+17    & Instruments and related products             & 47    & Holding and other investment offices   \\
+18    & Miscellaneous manufacturing industries       & 48    & Hotels and other lodging places        \\
+19    & Food and kindred products                    & 49    & Personal services                      \\
+20    & Tobacco manufactures                         & 50    & Business services                      \\
+21    & Textile mill products                        & 51    & Auto repair, services, and parking     \\
+22    & Apparel and other textile products           & 52    & Miscellaneous repair services          \\
+23    & Paper and allied products                    & 53    & Motion pictures                        \\
+24    & Printing and publishing                      & 54    & Amusement and recreation services      \\
+25    & Chemicals and allied products                & 55    & Health services                        \\
+26    & Petroleum and coal products                  & 56    & Legal services                         \\
+27    & Rubber and miscellaneous plastics products   & 57    & Educational services                   \\
+28    & Leather and leather products                 & 58    & Social services                        \\
+29    & Railroad transportation                      & 59    & Membership organizations               \\
+30    & Local and interurban passenger transit       & 60    & Miscellaneous professional services    \\ \hline
+\end{tabular}
+\end{table}
