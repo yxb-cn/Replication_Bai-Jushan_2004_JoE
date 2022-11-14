@@ -9,15 +9,18 @@ The simulation results are the same as the Bai's, but the empirical study is a l
 # Code:
 If you want to run the program, just open the "code.Rproj", and run all chunks in the Rmarkdown document, "Replicate_main.Rmd".
 
-Replicate_main.Rmd:     The main program.
+* Replicate_main.Rmd:     The main program.
 
-Myfunction.R:     All functions that are used in the main program.
+* Myfunction.R:     All functions that are used in the main program.
 
 # Data: 
-FTE_data/FTE1948-2000.csv:     The 60 sectors' employment. The data from the Bureau of Economic Analysis (BEA) have more than 60 sectors, but we just use the 60 sectors that are mentioned in Bai's paper.
+The data are from [the Bureau of Economic Analysis (BEA)](https://apps.bea.gov/iTable/?reqid=19&step=2&isuri=1&1921=survey), Table 6.4B, Table 6.4C and Table 1.7.3.
 
-FTE_data/Total_employment+GNP.csv:    The Total_employment and GNP data from the Bureau of Economic Analysis (BEA).
+* FTE_data/FTE1948-2000.csv:     The 60 sectors' employment. The data from the Bureau of Economic Analysis (BEA) have more than 60 sectors, but we just use the 60 sectors that are mentioned in Bai's paper.
+
+* FTE_data/Total_employment+GNP.csv:    The Total_employment and GNP data from the Bureau of Economic Analysis (BEA).
 
 # Replication paper:
-Replicate_main.pdf
+
+* Replicate_main.pdf
 
