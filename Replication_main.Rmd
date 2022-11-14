@@ -588,7 +588,7 @@ axy <- list(
 )
 
 axz <- list(
-        title = "10*log(employment)"
+        title = "log(employment)"
 )
 Sector = 60:1
 plot3 = plot_ly(z = ~as.matrix(FTE_data_order1948),x = ~Sector,y=~Year,colorscale = 'Rainbow')%>%
@@ -662,7 +662,7 @@ plotted is the observable total employment. It is seen that total employment lie
 
 ```{R eval=FALSE, include=FALSE}
 axz_scale <- list(
-        title = "10*log(employment)",range = c(-4, 4)
+        title = "log(employment)",range = c(-4, 4)
 )
 result1 = estimate_F(as.matrix(FTE_data), 3, normalization = 1)
 estimated_residuals = as.matrix(FTE_data)-result1$X_hat
@@ -714,69 +714,10 @@ CI_GNP_plot
 
 
 \newpage
-# My Comments
+# Conclusion
 
 &emsp;&emsp;This paper proposes three criteria for consistently estimating cross-section common stochastic trends in nonstationary panel data which are widely used and extended in both econometric theoretical and empirical study. 
 
-&emsp;&emsp;However, these criteria' accuracy depend on the choice of $kmax$ to some extent. If the $kmax$ is chosen to be too large, for example, $kmax=20$ of $kmax=30$ in section 5.1.2, then we will see the wrong results as follows.
-\newpage
-
-```{r echo=FALSE}
-estimated_num2_kmax20 = matrix(0,13,6)
-r2 = 2
-p = 1
-rou2 = 0.5
-theta2 = 0.5
-kmax_large1 = 20
-for(i in 1:repnum){
-  for(j in 1:13){
-    X_list = generate_generalized_DFM_data(NT_cases[j,1],NT_cases[j,2],r2,p,rou2,theta2)
-    X = X_list$X
-    X_diff = X_list$X_diff
-    estimated_num2_kmax20[j,1:3] = estimated_num2_kmax20[j,1:3] + estimate_factornum_byPC_IPC(X_diff,kmax_large1,3,1)
-    estimated_num2_kmax20[j,4:6] = estimated_num2_kmax20[j,4:6] + estimate_factornum_byPC_IPC(X,kmax_large1,3,2)
-  }
-}
-estimated_num2_kmax20 = estimated_num2_kmax20/repnum
-result2_kmax20 = cbind(NT_cases,estimated_num2_kmax20)
-colnames(result2_kmax20) <- c("N","T","PC1","PC2","PC3","IPC1","IPC2","IPC3")
-kable(result2_kmax20,booktabs = T,longtable = T,caption ="Estimated number of factors averaged over 1000 repititions (Generalized dynamic factor model) when kmax=20") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive","HOLD_position"),full_width = T)%>%
-  add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
-  footnote(general = "The level-data method gives an estimate of r (true value r = 2), and the differenced-data method gives an estimate of r(p + 1) (true value is 4).", threeparttable = TRUE)
-```
-
-```{r echo=FALSE}
-estimated_num2_kmax30 = matrix(0,13,6)
-r2 = 2
-p = 1
-rou2 = 0.5
-theta2 = 0.5
-kmax_large2 = 30
-for(i in 1:repnum){
-  for(j in 1:13){
-    X_list = generate_generalized_DFM_data(NT_cases[j,1],NT_cases[j,2],r2,p,rou2,theta2)
-    X = X_list$X
-    X_diff = X_list$X_diff
-    estimated_num2_kmax30[j,1:3] = estimated_num2_kmax30[j,1:3] + estimate_factornum_byPC_IPC(X_diff,kmax_large2,3,1)
-    estimated_num2_kmax30[j,4:6] = estimated_num2_kmax30[j,4:6] + estimate_factornum_byPC_IPC(X,kmax_large2,3,2)
-  }
-}
-estimated_num2_kmax30 = estimated_num2_kmax30/repnum
-result2_kmax30 = cbind(NT_cases,estimated_num2_kmax30)
-colnames(result2_kmax30) <- c("N","T","PC1","PC2","PC3","IPC1","IPC2","IPC3")
-kable(result2_kmax30,booktabs = T,longtable = T,caption ="Estimated number of factors
-      averaged over 1000 repititions (Generalized dynamic factor model) when kmax=30") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive","HOLD_position"),full_width = T)%>%
-  add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
-  footnote(general = "The level-data method gives an estimate of r (true value r = 2), and the differenced-data method gives an estimate of r(p + 1) (true value is 4).", threeparttable = TRUE)
-```
-
-&emsp;&emsp;According to my analysis to the simulation results, in practical application, some error may occur in the following three conditions:
-
-  1. $T$ and $N$ is too small. According to Table 3 and Table 4, small $T$ and $N$ tend to estimate the number of factors incorrectly.
-  2. The high dimensional dataset contains I(d)(d$\geq2$) series. Since this paper only consider I(0) and I(1) process, if $X$ contains I(d)(d$\geq2$) series, the criteria tend to over estimate the number of factors. For example, I test the dataset in @mccracken2016fred without transforming to ensure stationarity, the estimated number equals to $kmax$ by these criteria in this paper, no matter what $kmax$ is set (in this example, $T=730$ and $N=136$, obviously this error is not caused by data size).
-  3. Some special high dimensional data. $kmax=20$ or $kmax=30$ seems to be too large in this simulation even if we don't know the true number of factors, however, we cannot determine how large the $kmax$ is can be regarded as "too large". It is entirely possible that some datasets are extremely sensitive to $kmax$, a usually considered small $kmax$ may still be "too large" for such datasets. 
 
 \section*{Bibliography}
 
@@ -788,9 +729,9 @@ kable(result2_kmax30,booktabs = T,longtable = T,caption ="Estimated number of fa
 \begin{tabular}{llll}
 \hline
 Index & Sector                                       & Index & Sector                                 \\ \hline
-1     & Farms                                        & 31    & Trucking and warehousing1              \\
+1     & Farms                                        & 31    & Trucking and warehousing              \\
 2     & Agricultural services, forestry, and fishing & 32    & Water transportation                   \\
-3     & Metal mining                                 & 33    & Transportation by air1                 \\
+3     & Metal mining                                 & 33    & Transportation by air                 \\
 4     & Coal mining                                  & 34    & Pipelines, except natural gas          \\
 5     & Oil and gas extraction                       & 35    & Transportation services                \\
 6     & Nonmetallic minerals, except fuels           & 36    & Telephone and telegraph                \\
