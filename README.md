@@ -1,6 +1,6 @@
 # Replication_Bai_2004_JoE
 
-This is the replication of "Estimating cross-section common stochastic trends in nonstationary panel data" (Bai,2004).
+This is the replication of [Bai, Jushan. "Estimating cross-section common stochastic trends in nonstationary panel data." Journal of Econometrics 122.1 (2004): 137-183.](https://doi.org/10.1016/j.jeconom.2003.10.022).
 
 The simulation results are the same as the Bai's, but the empirical study is a little different due to the difference in data.
 
