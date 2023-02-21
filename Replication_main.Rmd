@@ -316,7 +316,7 @@ colnames(result2) <- c("N","T","PC1","PC2","PC3","IPC1","IPC2","IPC3")
 
 ```{r echo=FALSE}
 kable(result2,booktabs = T,longtable = T,caption ="Estimated number of factors 
-      averaged over 1000 repetition (Generalized dynamic factor model)") %>%
+      averaged over 1000 repetitions (Generalized dynamic factor model)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width = T)%>%
   add_header_above(c(" " = 2, "Differenced data" = 3, "Level data" = 3))%>%
   footnote(general = "The level-data method gives an estimate of r (true value r = 2), and the differenced-data method gives an estimate of r(p + 1) (true value is 4).", threeparttable = TRUE)
