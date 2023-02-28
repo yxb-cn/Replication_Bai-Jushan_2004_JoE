@@ -240,7 +240,7 @@ generate_generalized_DFM_data = function(N,T,r,p,rou,theta,seed = FALSE){
   }
   burn_num = 500
   # Generate u,v, drop the first elements at last
-  u = mvrnorm(T+burn_num+1,rep(0,2),diag(2))
+  u = mvrnorm(T+burn_num+p,rep(0,r),diag(r))
   v = mvrnorm(T+burn_num+1,rep(0,N),diag(N))
   # Generate e, drop the first elements at last
   e = matrix(0,T+burn_num,N)
@@ -248,15 +248,15 @@ generate_generalized_DFM_data = function(N,T,r,p,rou,theta,seed = FALSE){
     e[t,] = rou*e[t-1,]+v[t,]+theta*v[t-1,]
   }
   # Generate F, drop the first elements at last
-  F = matrix(0,T+burn_num+1,r)
+  F = matrix(0,T+burn_num+p,r)
   F[1,] = u[1,]
-  for(t in 2:(T+burn_num+1)){
+  for(t in 2:(T+burn_num+p)){
     F[t,] = F[t-1,]+u[t,]
   }
   F_lag = array(0,c(T+burn_num,r,p+1))
-  F_lag[,,1] = F[2:(T+burn_num+1),]
-  for(k in 2:(p+1)){
-    F_lag[,,k] = F[1:(T+burn_num),]
+  # F_lag[,,1] = F[(p+1):(T+burn_num+1),]
+  for(k in 1:(p+1)){
+    F_lag[,,k] = F[(p+2-k):(T+burn_num+p+1-k),]
   }
   # Generate X, and first difference of X
   F_lag = F_lag[(1+burn_num):(T+burn_num),,]
