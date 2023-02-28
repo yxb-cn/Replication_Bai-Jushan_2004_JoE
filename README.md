@@ -1,4 +1,4 @@
-# Replication_Bai_2004_JoE
+# Replication_Bai-Jushan_2004_JoE
 
 This is the replication of 
 
