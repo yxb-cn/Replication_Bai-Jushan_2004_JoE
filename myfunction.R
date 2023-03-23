@@ -254,7 +254,7 @@ generate_generalized_DFM_data = function(N,T,r,p,rou,theta,seed = FALSE){
     F[t,] = F[t-1,]+u[t,]
   }
   F_lag = array(0,c(T+burn_num,r,p+1))
-  # F_lag[,,1] = F[(p+1):(T+burn_num+1),]
+  
   for(k in 1:(p+1)){
     F_lag[,,k] = F[(p+2-k):(T+burn_num+p+1-k),]
   }
