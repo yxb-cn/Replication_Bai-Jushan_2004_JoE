@@ -2,7 +2,7 @@
 title: "Replication of \"Estimating cross-section common stochastic trends in nonstationary panel data\""
 author:
   - Xuanbin Yang
-date: \today
+date: November 14, 2022
 documentclass: article
 geometry: margin=1in
 tables: yes
@@ -622,7 +622,7 @@ order according to their 2000 values.}
 
 For data in differences, we start with $kmax = 6$, and then set $kmax$ at the estimated value in the first around as in the previous paragraph. With $kmax = 6$, the first two criteria suggest six factors and the last criterion gives four factors. If we set $kmax = 4$, all criteria give four factors. If we choose $kmax$ to 2, all criteria give two factors. We follow the decision in the original paper that there is one I(0) factor in the system. The estimated residuals resulting from a three-factor model is plotted in Fig.5. No discernable pattern is found in the residuals, indicating a reasonable fit.
 
-**(The results are a little different from the original paper. Since the simulation is consistant with the original paper, then the difference can be attributed to the data consistency. Our data have missing values and we don't know how the author deal with this issue, even more, we don't know how much the rest of our data differs from the author's, though the Fig 3 and Fig 4 is similar to the original ones.)**
+**(The results are a little different from the original paper. Since the simulation is consistent with the original paper, then the difference can be attributed to the data consistency. Our data have missing values and we don't know how the author deal with this issue, even more, we don't know how much the rest of our data differs from the author's, though the Fig 3 and Fig 4 is similar to the original ones.)**
 
 ```{R eval=FALSE, include=FALSE}
 kmax = 6
